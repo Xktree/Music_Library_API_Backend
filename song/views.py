@@ -1,5 +1,5 @@
 from django.http.response import Http404
-from .models import Music 
+from .models import Song 
 from .serializers import MusicSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response 
@@ -10,7 +10,7 @@ from rest_framework import status
 class MusicList(APIView):
 
     def get(self, request):
-        music = Music.objects.all()
+        music = Song.objects.all()
         serializer = MusicSerializer(music, many=True)
         return Response(serializer.data)
 
@@ -25,8 +25,8 @@ class MusicDetail(APIView):
 
     def get_object(self, pk):
         try:
-            return Music.objects.get(pk=pk)
-        except Music.DoesNotExist:
+            return Song.objects.get(pk=pk)
+        except Song.DoesNotExist:
             raise Http404
 
     #get by id
