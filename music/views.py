@@ -31,6 +31,15 @@ class MusicDetail(APIView):
 
     #get by id
     def get(self, request, pk):
-        song = self.get_object(pk)
-        serializer = MusicSerializer(song)
+        music = self.get_object(pk)
+        serializer = MusicSerializer(music)
         return Response(serializer.data)
+
+    #update
+    def put(self, request, pk):
+        music = self.get_object(pk)
+        serializer = MusicSerializer(music, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
